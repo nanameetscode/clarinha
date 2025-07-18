@@ -2,115 +2,95 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Confirmação de Presença - 15 Anos</title>
+  <title>Confirmação de Presença - Ana Clara</title>
   <style>
     body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom right, #f8e1e7, #fbe6c2);
-      color: #5c2a2a;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      background: linear-gradient(to right, #f8e1e7, #f5d1c6);
+      font-family: 'Segoe UI', sans-serif;
+      color: #5c3a3a;
+      text-align: center;
       padding: 20px;
     }
 
-    .card {
-      background-color: white;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      padding: 30px;
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-    }
-
     h1 {
-      color: #c88e8e;
-      margin-bottom: 10px;
+      font-size: 2.5em;
+      color: #b76e79;
     }
 
-    h2 {
-      color: #d4af37;
-      margin-bottom: 20px;
+    .form-container {
+      background-color: #fff7f8;
+      border: 2px solid #e4b2b2;
+      border-radius: 20px;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(186, 144, 144, 0.3);
     }
 
-    #contador {
-      font-size: 18px;
-      color: #d4af37;
-      margin-bottom: 20px;
-      font-weight: bold;
-    }
-
-    input, select, button {
+    input, textarea, button {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
+      padding: 10px;
+      margin: 12px 0;
       border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 16px;
+      border: 1px solid #dcbaba;
     }
 
     button {
       background-color: #d4af37;
       color: white;
+      font-weight: bold;
       border: none;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
 
     button:hover {
-      background-color: #c39b2d;
+      background-color: #b98d2d;
     }
 
-    .footer {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #805858;
+    .countdown {
+      font-size: 1.2em;
+      color: #8b5c5c;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Festa de 15 Anos da Ana Clara</h1>
-    <h2>20 de Julho - Confirme sua presença</h2>
-    <div id="contador"></div>
-    <form action="#" method="post">
-      <input type="text" name="nome" placeholder="Seu nome" required>
-      <select name="presenca" required>
-        <option value="">Vai comparecer?</option>
-        <option value="sim">Sim</option>
-        <option value="nao">Não</option>
-      </select>
-      <input type="number" name="acompanhantes" placeholder="Quantidade de acompanhantes" min="0">
-      <button type="submit">Confirmar</button>
+  <h1>Festa de 15 anos da Ana Clara</h1>
+  <p>Dia 20 de julho — Esperamos você! 💖</p>
+  <div class="countdown" id="countdown"></div>
+
+  <div class="form-container">
+    <form action="https://formsubmit.co/annabg001@gmail.com" method="POST">
+      <input type="text" name="Nome" placeholder="Seu nome" required>
+      <input type="number" name="Quantidade de pessoas" placeholder="Quantas pessoas vão?" required>
+      <textarea name="Observações" rows="3" placeholder="Tem alguma observação? (opcional)"></textarea>
+      
+      <!-- Redireciona após envio -->
+      <input type="hidden" name="_next" value="https://seulink.github.io/confirmado.html">
+      <!-- Evita spam -->
+      <input type="hidden" name="_captcha" value="false">
+
+      <button type="submit">Confirmar Presença</button>
     </form>
-  </div>
-  <div class="footer">
-    Com carinho, Ana Clara aguarda você nesse momento especial! 💖
   </div>
 
   <script>
-    const destino = new Date("July 20, 2025 00:00:00").getTime();
-    const contador = document.getElementById("contador");
+    const countDownDate = new Date("Jul 20, 2025 19:00:00").getTime();
+    const x = setInterval(function () {
+      const now = new Date().getTime();
+      const distance = countDownDate - now;
 
-    const atualizar = setInterval(function () {
-      const agora = new Date().getTime();
-      const tempo = destino - agora;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      const dias = Math.floor(tempo / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((tempo % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutos = Math.floor((tempo % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((tempo % (1000 * 60)) / 1000);
+      document.getElementById("countdown").innerHTML =
+        "Faltam " + days + "d " + hours + "h " + minutes + "m " + seconds + "s";
 
-      contador.innerHTML = `Faltam ${dias} dias, ${horas}h ${minutos}min ${segundos}s`;
-
-      if (tempo < 0) {
-        clearInterval(atualizar);
-        contador.innerHTML = "A festa começou! 🎉";
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = "A festa já começou! 🎉";
       }
     }, 1000);
   </script>
